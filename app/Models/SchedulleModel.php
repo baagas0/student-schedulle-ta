@@ -28,20 +28,28 @@ class SchedulleModel extends Model
     {
         if ($ID) {
             return $this->db->table('schedulles')
+            ->join('teachers', 'teachers.id = schedulles.teacher_id')
             ->where(['schedulles.id' => $ID])
+            ->select(['schedulles.*', 'teachers.name as teacher_name'])
             ->get()->getRowArray();
         } else {
             return $this->db->table('schedulles')
+            ->join('teachers', 'teachers.id = schedulles.teacher_id')
+            ->select(['schedulles.*', 'teachers.name as teacher_name'])
             ->get()->getResultArray();
         }
     }
 
 	public function createData($data)
     {
-        $model = new TeacherModel();
+        $model = new SchedulleModel();
         $model->insert([
-            'name'     	    => $data['name'],
-            'email'     	    => $data['email'],
+
+            'teacher_id'    => $data['teacher_id'],
+            'date'          => $data['date'],
+            'time'          => $data['time'],
+            'place'         => $data['place'],
+            'description'   => $data['description'],
 
             'created_at'     	=> date('Y-m-d h:i:s'),
             'updated_at'     	=> date('Y-m-d h:i:s'),
@@ -52,15 +60,18 @@ class SchedulleModel extends Model
 
     public function updateData($data)
     {
-        $model = new TeacherModel();
+        $model = new SchedulleModel();
         $model->update(
             [
                 'id' => $data['id']
             ], [
-            'name'     	    => $data['name'],
-            'email'     	    => $data['email'],
-            'created_at'     	=> date('Y-m-d h:i:s'),
-            'updated_at'     	=> date('Y-m-d h:i:s'),
+            
+                'change_date'       => $data['change_date'],
+                'change_time'       => $data['change_time'],
+                'change_description'      => $data['change_description'],
+
+                'created_at'     	=> date('Y-m-d h:i:s'),
+                'updated_at'     	=> date('Y-m-d h:i:s'),
             ]
         );
         

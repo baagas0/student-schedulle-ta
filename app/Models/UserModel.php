@@ -12,8 +12,10 @@ class UserModel extends Model
 	{
 		if ($username) {
 			return $this->db->table('users')
-				->select('*,users.id AS userID,user_role.id AS role_id')
+				->select('*,users.id AS userID,user_role.id AS role_id, students.name as student_name, teachers.name as teacher_name')
 				->join('user_role', 'users.role = user_role.id')
+				->join('students', 'students.id = users.student_id', 'left')
+				->join('teachers', 'teachers.id = users.teacher_id', 'left')
 				->where(['username' => $username])
 				->get()->getRowArray();
 		} elseif ($userID) {
@@ -24,14 +26,16 @@ class UserModel extends Model
 				->get()->getRowArray();
 		} elseif ($studentID) {
 			return $this->db->table('users')
-				->select('*,users.id AS userID,user_role.id AS role_id')
+				->select('*,users.id AS userID,user_role.id AS role_id, students.name as student_name')
 				->join('user_role', 'users.role = user_role.id')
+				->join('students', 'students.id = users.student_id')
 				->where(['users.student_id' => $studentID])
 				->get()->getRowArray();
 		} elseif ($teacherID) {
 			return $this->db->table('users')
-				->select('*,users.id AS userID,user_role.id AS role_id')
+				->select('*,users.id AS userID,user_role.id AS role_id, teachers.name as teacher_name')
 				->join('user_role', 'users.role = user_role.id')
+				->join('teachers', 'teachers.id = users.teacher_id')
 				->where(['users.teacher_id' => $teacherID])
 				->get()->getRowArray();
 		} else {
@@ -107,7 +111,6 @@ class UserModel extends Model
 	}
 	public function updateRole($dataRole)
 	{
-		dd($dataRole);
 		return $this->db->table('user_role')->update(['role_name' => $dataRole['inputRoleName']], ['id' => $dataRole['roleID']]);
 	}
 	public function deleteRole($role)
