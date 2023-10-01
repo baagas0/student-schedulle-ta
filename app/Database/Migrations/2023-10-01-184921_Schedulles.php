@@ -38,6 +38,9 @@ class Schedulles extends Migration
 				'type' => 'TEXT',
                 'null' => true,
 			],
+			'change_time' => [
+				'type' => 'TIME',
+			],
             'change_description' => [
 				'type' => 'TEXT',
                 'null' => true,

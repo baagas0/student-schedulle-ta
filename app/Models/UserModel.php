@@ -48,6 +48,7 @@ class UserModel extends Model
 			->select('*,user_menu_category.id AS menuCategoryID')
 			->join('user_access', 'user_menu_category.id = user_access.menu_category_id')
 			->where(['user_access.role_id' => $role])
+			->orderBy('user_menu_category.order', 'asc')
 			->get()->getResultArray();
 	}
 	public function getAccessMenu($role)

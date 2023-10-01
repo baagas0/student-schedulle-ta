@@ -25,7 +25,7 @@
                                     <td><?= $users['fullname']; ?></td>
                                     <td class="d-none d-md-table-cell"><?= $users['username']; ?></td>
                                     <td><span class="badge bg-success"><?= $users['role_name']; ?></span></td>
-                                    <td><?= $users['created_at']; ?></td>
+                                    <td><?= date('d F Y', strtotime($users['created_at'])); ?></td>
                                     <td>
                                         <button class="btn btn-info btn-sm btnEdit" data-bs-toggle="modal" data-bs-target="#formUserModal" data-id="<?= $users['userID']; ?>" data-fullname="<?= $users['fullname']; ?>" data-username="<?= $users['username']; ?>" data-role="<?= $users['role']; ?>">Update</button>
 

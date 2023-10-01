@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\TeacherModel;
 use App\Models\UserModel;
 
-class Teachers extends BaseController
+class Schedulles extends BaseController
 {
 	public $Model;
 
